@@ -1,25 +1,17 @@
 {
   "id": "phyvision",
   "title": "Physical Vision Sync",
-  "description": "Синхронизация физических миниатюр с динамическим освещением Foundry VTT.",
-  "version": "1.1.0",
+  "description": "Syncronize figurine visions with FoundryVTT.",
+  "version": "dev",
   "compatibility": {
-    "minimum": "12",
+    "minimum": "13",
     "verified": "13.351"
   },
-  "scripts": [
+  "esmodules": [
     "scripts/main.js"
   ],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    },
-    {
-      "lang": "ru",
-      "name": "Русский",
-      "path": "lang/ru.json"
-    }
-  ]
+  "socket": true,
+
+  "manifest": "",
+  "download": ""
 }

@@ -1,0 +1,35 @@
+<div class="phyvision-scaling-control standard-form">
+    <!-- Настройка стороны -->
+    <div class="form-group">
+        <label> Размер стороны, px </label>
+        <div class="form-fields">
+            <input type="number" name="side" value="{{side}}" step="1" min="1">
+        </div>
+    </div>
+
+    <!-- Ширинa -->
+    <div class="form-group">
+        <label><i class="fas fa-arrows-alt-h"></i> Ширина </label>
+        <div class="form-fields">
+            <input type="number" name="w" value="{{w}}" step="1" min="1" disabled>
+        </div>
+    </div>
+
+    <!-- Высота -->
+    <div class="form-group">
+        <label><i class="fas fa-arrows-alt-v"></i> Высота </label>
+        <div class="form-fields">
+            <input type="number" name="h" value="{{h}}" step="1" min="1" disabled>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Футер с кнопкой сохранения -->
+    <footer class="sheet-footer flexrow mt-2">
+        <button type="button" data-action="saveSettings" class="default">
+            <i class="fas fa-save"></i> Сохранить настройки
+        </button>
+    </footer>
+
+</div>

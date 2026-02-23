@@ -1,0 +1,24 @@
+{
+  "name": "phyvision",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/asmazovec/PhyVision#readme",
+  "bugs": {
+    "url": "https://github.com/asmazovec/PhyVision/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asmazovec/PhyVision.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "scripts/main.js",
+  "scripts": {
+    "createSymlinks": "node ./tools/create-symlinks.mjs",
+    "postinstall": "npm run createSymlinks"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.1"
+  }
+}
