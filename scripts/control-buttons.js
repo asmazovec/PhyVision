@@ -1,5 +1,5 @@
 import { moduleName } from "./consts.js";
-import { fullSyncToObserver } from "./socket-handler.js";
+import { ObserverPickerApp } from "./observer-picker.js";
 
 export function initializeControlButtons() {
     Hooks.on('getSceneControlButtons', controls => {
@@ -19,7 +19,7 @@ export function initializeControlButtons() {
                 },
                 observerPicker: {
                     name: "observerPicker",
-                    title: "Выбрать наблюдателя (TV)",
+                    title: "Pick TV observer",
                     icon: "fas fa-tv",
                     order: 1,
                     button: true,

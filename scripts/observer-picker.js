@@ -57,7 +57,7 @@ export class ObserverPickerApp extends HandlebarsApplicationMixin(ApplicationV2)
         // Уведомляем предыдущего наблюдателя об отключении
         if (previousId) {
             game.socket.emit(socketId, {
-                type: "SET_OBSERVER",
+                type: SocketAction.SET_OBSERVER,
                 payload: { observerUserId: previousId, enabled: false },
             });
         }
@@ -67,7 +67,7 @@ export class ObserverPickerApp extends HandlebarsApplicationMixin(ApplicationV2)
 
         // Уведомляем нового наблюдателя
         game.socket.emit(socketId, {
-            type: "SET_OBSERVER",
+            type: SocketAction.SET_OBSERVER,
             payload: { observerUserId: userId, enabled: true },
         });
 
@@ -82,7 +82,7 @@ export class ObserverPickerApp extends HandlebarsApplicationMixin(ApplicationV2)
 
         if (previousId) {
             game.socket.emit(socketId, {
-                type: "SET_OBSERVER",
+                type: SocketAction.SET_OBSERVER,
                 payload: { observerUserId: previousId, enabled: false },
             });
         }
