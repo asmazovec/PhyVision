@@ -1,0 +1,28 @@
+<form class="tv-frame-observer-picker">
+  <p>Выберите клиент-наблюдатель (TV):</p>
+
+  <div class="observer-list">
+    {{#each users}}
+    <div class="observer-item flexrow" data-user-id="{{this.id}}">
+      <span class="user-name">
+        <i class="fas {{#if this.isGM}}fa-crown{{else}}fa-user{{/if}}"></i>
+        {{this.name}}
+      </span>
+      <button type="button"
+              class="btn-select-observer {{#if this.isSelected}}active{{/if}}"
+              data-user-id="{{this.id}}"
+              {{#if this.isSelected}}disabled{{/if}}>
+        {{#if this.isSelected}}✓ Активен{{else}}Выбрать{{/if}}
+      </button>
+    </div>
+    {{else}}
+    <p class="hint">Нет подключённых пользователей</p>
+    {{/each}}
+  </div>
+
+  {{#if hasObserver}}
+  <button type="button" class="btn-clear-observer">
+    <i class="fas fa-times"></i> Отключить наблюдателя
+  </button>
+  {{/if}}
+</form>

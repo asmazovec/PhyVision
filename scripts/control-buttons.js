@@ -1,4 +1,5 @@
 import { moduleName } from "./consts.js";
+import { fullSyncToObserver } from "./socket-handler.js";
 
 export function initializeControlButtons() {
     Hooks.on('getSceneControlButtons', controls => {

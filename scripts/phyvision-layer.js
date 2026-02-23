@@ -1,4 +1,5 @@
 import { moduleName } from "./consts.js";
+import { broadcastFrameToObserver, fullSyncToObserver } from "./socket-handler.js";
 
 export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
     constructor() {
@@ -68,6 +69,9 @@ export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
         if (this.isDragging) {
             this.isDragging = false;
             canvas.scene?.setFlag(moduleName, "frame", this.frame);
+
+            const bounds = this.frame;
+            broadcastFrameToObserver({ x: bounds.x, y: bounds.y, height: bounds.h, width: bounds.w });
         }
     }
 
@@ -83,6 +87,9 @@ export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
     _activate() {
         super._activate();
         this.refreshVisuals();
+
+        const bounds = this.frame;
+        fullSyncToObserver({ x: bounds.x, y: bounds.y, height: bounds.h, width: bounds.w });
     }
 
     _deactivate() {
