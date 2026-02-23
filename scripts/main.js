@@ -1,8 +1,6 @@
 import {initializeControlButtons} from "./control-buttons.js";
 import {PhyVisionLayer, initializePhyVisionLayer} from "./phy-vision-layer.js";
 
-export const moduleName = "phyvision";
-
 class PhyVision {
     constructor() {
         this.active = false;
