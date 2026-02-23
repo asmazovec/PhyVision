@@ -16,8 +16,8 @@ class PhyVision {
 }
 
 Hooks.once("init", () => {
-    initializeControlButtons();
     initializePhyVisionLayer();
+    initializeControlButtons();
 });
 
 Hooks.once("setup", () => {
