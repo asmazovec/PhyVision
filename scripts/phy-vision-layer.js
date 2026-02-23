@@ -58,9 +58,9 @@ export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
     _onDragStart(event) {
         this.isDragging = true;
         const position = event.data.getLocalPosition(this.parent);
-        this.dragOffset = { 
-            x: this.frame.x - position.x, 
-            y: this.frame.y - position.y 
+        this.dragOffset = {
+            x: this.frame.x - position.x,
+            y: this.frame.y - position.y
         };
     }
 
@@ -80,20 +80,20 @@ export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
         }
     }
 
-    _activate() { 
-        super._activate(); 
-        this.refreshVisuals(); 
+    _activate() {
+        super._activate();
+        this.refreshVisuals();
     }
-    
-    _deactivate() { 
-        super._deactivate(); 
-        this.refreshVisuals(); 
+
+    _deactivate() {
+        super._deactivate();
+        this.refreshVisuals();
     }
 }
 
 export function initializePhyVisionLayer() {
-    CONFIG.Canvas.layers.phyvision = { 
-        group: "interface", 
+    CONFIG.Canvas.layers.phyvision = {
+        group: "interface",
         layerClass: PhyVisionLayer,
     };
 }

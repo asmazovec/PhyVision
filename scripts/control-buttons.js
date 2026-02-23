@@ -1,3 +1,5 @@
+import { moduleName } from "./consts";
+
 export function initializeControlButtons() {
     Hooks.on('getSceneControlButtons', controls => {
         controls.phyvision = {
@@ -6,7 +8,7 @@ export function initializeControlButtons() {
             title: "phyvision",
             icon: "fas fa-eye",
             visible: game.user.isGM,
-            onChange: () => phyVision.toggleGMLayer(),
+            onChange: () => canvas[moduleName].activate(),
             tools: {
                 visionControl: {
                     name: "visionControl",
