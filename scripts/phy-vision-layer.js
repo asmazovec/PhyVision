@@ -1,4 +1,4 @@
-import { moduleName } from "./consts";
+import { moduleName } from "./consts.js";
 
 export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
     constructor() {
