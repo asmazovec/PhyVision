@@ -1,4 +1,4 @@
-import { moduleName } from "./consts";
+import { moduleName } from "./consts.js";
 
 export function initializeControlButtons() {
     Hooks.on('getSceneControlButtons', controls => {
