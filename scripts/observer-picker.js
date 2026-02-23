@@ -23,7 +23,7 @@ export class ObserverPickerApp extends HandlebarsApplicationMixin(ApplicationV2)
 
     static PARTS = {
         form: {
-            template: `modules/${moduleName}/templates/observer-picker.hbs`,
+            template: `./modules/${moduleName}/templates/observer-picker.hbs`,
         },
     };
 
