@@ -1,0 +1,15 @@
+{
+  "PHYVISION.Settings.EnableWS.Name": "Enable WebSocket Connection",
+  "PHYVISION.Settings.EnableWS.Hint": "Connect to the external API server to receive miniature coordinates.",
+  "PHYVISION.Settings.WSUrl.Name": "WebSocket URL",
+  "PHYVISION.Settings.WSUrl.Hint": "Address of the API server (e.g., ws://localhost:8080).",
+  "PHYVISION.Settings.ClusterRadius.Name": "Clustering Sensitivity (Grid Spaces)",
+  "PHYVISION.Settings.ClusterRadius.Hint": "Maximum distance between miniatures to group them into a single cluster.",
+  "PHYVISION.Settings.VisionRange.Name": "Vision Range (Feet/Meters)",
+  "PHYVISION.Settings.VisionRange.Hint": "The radius of vision granted by each cluster of miniatures.",
+  "PHYVISION.Settings.MarkerColor.Name": "Marker Color",
+  "PHYVISION.Settings.MarkerColor.Hint": "Color of the centroid circles (HEX).",
+  "PHYVISION.Controls.GroupTitle": "Physical Vision Sync",
+  "PHYVISION.Controls.ToggleFrame": "Toggle Screen Frame",
+  "PHYVISION.Controls.ResetFrame": "Reset Frame Size (1920x1080)"
+}

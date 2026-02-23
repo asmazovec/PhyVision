@@ -1,0 +1,15 @@
+{
+  "PHYVISION.Settings.EnableWS.Name": "Включить WebSocket",
+  "PHYVISION.Settings.EnableWS.Hint": "Подключаться к внешнему API серверу для получения координат миниатюр.",
+  "PHYVISION.Settings.WSUrl.Name": "WebSocket URL",
+  "PHYVISION.Settings.WSUrl.Hint": "Адрес API сервера (например: ws://localhost:8080).",
+  "PHYVISION.Settings.ClusterRadius.Name": "Чувствительность (в клетках)",
+  "PHYVISION.Settings.ClusterRadius.Hint": "Максимальное расстояние между фигурками для объединения в одну группу.",
+  "PHYVISION.Settings.VisionRange.Name": "Дальность зрения (в футах/метрах)",
+  "PHYVISION.Settings.VisionRange.Hint": "Радиус обзора, который раздает каждая группа фигурок.",
+  "PHYVISION.Settings.MarkerColor.Name": "Цвет маркеров",
+  "PHYVISION.Settings.MarkerColor.Hint": "Цвет кружков центроидов (HEX).",
+  "PHYVISION.Controls.GroupTitle": "Синхронизация миниатюр",
+  "PHYVISION.Controls.ToggleFrame": "Включить настройку экрана",
+  "PHYVISION.Controls.ResetFrame": "Сбросить размер рамки (1920x1080)"
+}
