@@ -17,6 +17,22 @@ export function initializeControlButtons() {
                     icon: "fas fa-eye",
                     order: 0,
                 },
+                observerPicker: {
+                    name: "observerPicker",
+                    title: "Выбрать наблюдателя (TV)",
+                    icon: "fas fa-tv",
+                    order: 1,
+                    button: true,
+                    onChange: () => {
+                        const appId = "phyvision-observer-picker";
+                        const existing = foundry.applications.instances.get(appId);
+                        if (existing) {
+                            existing.close();
+                        } else {
+                            new ObserverPickerApp().render({ force: true });
+                        }
+                    },
+                },
             },
         }
     });

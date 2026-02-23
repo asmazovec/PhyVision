@@ -1,20 +1,23 @@
-import { moduleName } from "./consts.js";
+import { moduleName, socketId } from "./consts.js";
 import { SocketAction } from "./socket-handler.js";
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
-/**
- * Диалог выбора наблюдателя — доступен только GM
- */
-export class ObserverPickerDialog extends foundry.applications.api.ApplicationV2 {
+export class ObserverPickerApp extends HandlebarsApplicationMixin(ApplicationV2) {
     static DEFAULT_OPTIONS = {
-        id: "tv-frame-observer-picker",
+        id: "phyvision-observer-picker",
+        classes: ["phyvision", "observer-picker"],
         window: {
-            title: "TV Frame: Выбор наблюдателя",
+            title: "PhyVision: Выбор наблюдателя",
             icon: "fas fa-tv",
             resizable: false,
         },
         position: {
-            width: 320,
+            width: 340,
             height: "auto",
+        },
+        actions: {
+            selectObserver: ObserverPickerApp.#onSelectObserver,
+            clearObserver: ObserverPickerApp.#onClearObserver,
         },
     };
 
@@ -24,62 +27,69 @@ export class ObserverPickerDialog extends foundry.applications.api.ApplicationV2
         },
     };
 
-    async _prepareContext() {
+    async _prepareContext(options) {
         const currentObserverId = game.settings.get(moduleName, "selectedObserverId");
 
-        // Получаем список онлайн-пользователей (кроме текущего GM)
         const onlineUsers = game.users
-            .filter((u) => u.active && u.id !== game.user.id)
-            .map((u) => ({
+            .filter(u => u.active && u.id !== game.user.id)
+            .map(u => ({
                 id: u.id,
                 name: u.name,
                 isSelected: u.id === currentObserverId,
-                role: u.role,
                 isGM: u.isGM,
             }));
 
         return {
             users: onlineUsers,
-            currentObserverId,
             hasObserver: !!currentObserverId,
+            currentObserverName: currentObserverId
+                ? (game.users.get(currentObserverId)?.name ?? "—")
+                : null,
         };
     }
 
-    static async selectObserver(userId) {
-        const handler = phyvision.socketHandler;
-        const previousObserverId = game.settings.get(moduleName, "selectedObserverId");
+    static async #onSelectObserver(event, target) {
+        const userId = target.dataset.userId;
+        if (!userId) return;
 
-        // Отключаем предыдущего наблюдателя
-        if (previousObserverId) {
-            handler.emit(SocketAction.SET_OBSERVER, {
-                observerUserId: previousObserverId,
-                enabled: false,
+        const previousId = game.settings.get(moduleName, "selectedObserverId");
+
+        // Уведомляем предыдущего наблюдателя об отключении
+        if (previousId) {
+            game.socket.emit(socketId, {
+                type: "SET_OBSERVER",
+                payload: { observerUserId: previousId, enabled: false },
             });
         }
 
-        // Назначаем нового
+        // Сохраняем нового
         await game.settings.set(moduleName, "selectedObserverId", userId);
-        handler.emit(SocketAction.SET_OBSERVER, {
-            observerUserId: userId,
-            enabled: true,
+
+        // Уведомляем нового наблюдателя
+        game.socket.emit(socketId, {
+            type: "SET_OBSERVER",
+            payload: { observerUserId: userId, enabled: true },
         });
 
         const user = game.users.get(userId);
-        ui.notifications.info(`Наблюдатель назначен: ${user?.name}`);
+        ui.notifications.info(`Наблюдатель: ${user?.name}`);
+
+        this.render({ force: true });
     }
 
-    static async clearObserver() {
-        const handler = phyvision.socketHandler;
-        const previousObserverId = game.settings.get(moduleName, "selectedObserverId");
+    static async #onClearObserver(event, target) {
+        const previousId = game.settings.get(moduleName, "selectedObserverId");
 
-        if (previousObserverId) {
-            handler.emit(SocketAction.SET_OBSERVER, {
-                observerUserId: previousObserverId,
-                enabled: false,
+        if (previousId) {
+            game.socket.emit(socketId, {
+                type: "SET_OBSERVER",
+                payload: { observerUserId: previousId, enabled: false },
             });
         }
 
         await game.settings.set(moduleName, "selectedObserverId", "");
         ui.notifications.info("Наблюдатель отключён");
+
+        this.render({ force: true });
     }
 }

@@ -1,28 +1,33 @@
-<form class="tv-frame-observer-picker">
-  <p>Выберите клиент-наблюдатель (TV):</p>
-
-  <div class="observer-list">
-    {{#each users}}
-    <div class="observer-item flexrow" data-user-id="{{this.id}}">
-      <span class="user-name">
-        <i class="fas {{#if this.isGM}}fa-crown{{else}}fa-user{{/if}}"></i>
-        {{this.name}}
-      </span>
-      <button type="button"
-              class="btn-select-observer {{#if this.isSelected}}active{{/if}}"
-              data-user-id="{{this.id}}"
-              {{#if this.isSelected}}disabled{{/if}}>
-        {{#if this.isSelected}}✓ Активен{{else}}Выбрать{{/if}}
-      </button>
+<div class="phyvision-observer-picker">
+    {{#if hasObserver}}
+    <div class="current-observer">
+        <p><i class="fas fa-tv"></i> <strong>Наблюдатель:</strong> {{currentObserverName}}</p>
+        <button type="button" data-action="clearObserver">
+            <i class="fas fa-times"></i> Отключить
+        </button>
     </div>
+    <hr>
+    {{/if}}
+    <p>Онлайн пользователи:</p>
+    {{#if users.length}}
+    <ul class="observer-list">
+        {{#each users}}
+        <li class="observer-item flexrow">
+            <span class="user-name">
+                <i class="fas {{#if this.isGM}}fa-crown{{else}}fa-user{{/if}}"></i>
+                {{this.name}}
+            </span>
+            {{#if this.isSelected}}
+            <span class="status-active"><i class="fas fa-check"></i> Активен</span>
+            {{else}}
+            <button type="button" data-action="selectObserver" data-user-id="{{this.id}}">
+                Выбрать
+            </button>
+            {{/if}}
+        </li>
+        {{/each}}
+    </ul>
     {{else}}
     <p class="hint">Нет подключённых пользователей</p>
-    {{/each}}
-  </div>
-
-  {{#if hasObserver}}
-  <button type="button" class="btn-clear-observer">
-    <i class="fas fa-times"></i> Отключить наблюдателя
-  </button>
-  {{/if}}
-</form>
+    {{/if}}
+</div>
