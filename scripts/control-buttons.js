@@ -1,19 +1,18 @@
 export function initializeControlButtons() {
     Hooks.on('getSceneControlButtons', controls => {
         controls.phyvision = {
+            activeTool: "visionControl",
             name: "phyvision",
             title: "phyvision",
             icon: "fas fa-eye",
-            activeTool: "controlView",
+            visible: game.user.isGM,
+            onChange: () => phyVision.toggleGMLayer(),
             tools: {
-                controlView: {
-                    name: "controlView",
-                    title: "controlView",
-                    icon: "fas fa-compress-arrows-alt",
-                    visible: true,
-                    button: true,
+                visionControl: {
+                    name: "visionControl",
+                    title: "Manual vision control",
+                    icon: "fas fa-eye",
                     order: 0,
-                    onChange: () => phyVision.toggleGMLayer(),
                 },
             },
         }
