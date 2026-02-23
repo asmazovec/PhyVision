@@ -1,7 +1,6 @@
 export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
     constructor() {
         super();
-        this.active = false;
         this.frame = { x: 0, y: 0, w: 1920, h: 1080 };
         this.isDragging = false;
         this.dragOffset = { x: 0, y: 0 };
