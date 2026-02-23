@@ -1,3 +1,5 @@
+import { moduleName } from "./consts.js";
+
 import { TVFrameSocketHandler } from "./socket-handler.js";
 
 import { initializeControlButtons } from "./control-buttons.js";
@@ -23,8 +25,8 @@ Hooks.once("ready", () => {
 
 Hooks.on("canvasPan", (canvas, panData) => {
   // Если мы наблюдатель и вид заблокирован — отменяем ручной pan
-  const isObserver = game.settings.get(MODULE_ID, "isObserver");
-  const isLocked = game.settings.get(MODULE_ID, "viewLocked");
+  const isObserver = game.settings.get(moduleName, "isObserver");
+  const isLocked = game.settings.get(moduleName, "viewLocked");
 
   if (isObserver && isLocked) {
     return false; // предотвращаем pan
@@ -32,7 +34,7 @@ Hooks.on("canvasPan", (canvas, panData) => {
 });
 
 Hooks.on("canvasReady", () => {
-  const isObserver = game.settings.get(MODULE_ID, "isObserver");
+  const isObserver = game.settings.get(moduleName, "isObserver");
   if (isObserver) {
     // Скрываем UI элементы на TV-экране
     document.getElementById("ui-left")?.style.setProperty("display", "none");
