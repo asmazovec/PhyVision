@@ -5,7 +5,7 @@ export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
         super();
         this.frame = { x: 0, y: 0, w: 1920, h: 1080 };
         this.isDragging = false;
-        this.dragOffset = { x: 0, y: 0 };
+        this.dragData = null;
     }
 
     refreshVisuals() {
@@ -18,7 +18,6 @@ export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
         const d = canvas.dimensions.rect;
         const f = this.frame;
 
-        // 1. Рисуем затемнение
         this.overlay.clear();
         this.overlay.beginFill(0x000000, 0.7);
         this.overlay.drawRect(d.x, d.y, d.width, f.y - d.y);
@@ -27,19 +26,18 @@ export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
         this.overlay.drawRect(f.x + f.w, f.y, (d.x + d.width) - (f.x + f.w), f.h);
         this.overlay.endFill();
 
-        // 2. Рисуем рамку
         this.frameGraphic.clear();
         this.frameGraphic.lineStyle(4, 0x00ff00, 1);
         this.frameGraphic.beginFill(0x00ff00, 0.05);
         this.frameGraphic.drawRect(f.x, f.y, f.w, f.h);
         this.frameGraphic.endFill();
-        
+
         this.frameGraphic.hitArea = new PIXI.Rectangle(f.x, f.y, f.w, f.h);
     }
 
     async _draw() {
         await super._draw();
-        
+
         const savedFrame = canvas.scene?.getFlag(moduleName, "frame");
         if (savedFrame) this.frame = savedFrame;
 
@@ -48,7 +46,7 @@ export class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
 
         this.frameGraphic.eventMode = 'static';
         this.frameGraphic.cursor = 'pointer';
-        
+
         this.frameGraphic.on('pointerdown', this._onDragStart, this);
         this.frameGraphic.on('pointerup', this._onDragEnd, this);
         this.frameGraphic.on('pointerupoutside', this._onDragEnd, this);

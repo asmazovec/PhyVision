@@ -1,10 +1,11 @@
-import {initializeControlButtons} from "./control-buttons.js";
-import {PhyVisionLayer, initializePhyVisionLayer} from "./phy-vision-layer.js";
+import { moduleName } from "./consts.js";
+import { initializeControlButtons } from "./control-buttons.js";
+import { PhyVisionLayer, initializePhyVisionLayer } from "./phy-vision-layer.js";
 
 class PhyVision {
     constructor() {
-        this.active = false;
-        this.phyVisionLayer = new PhyVisionLayer();
+        this.layer = foundry.canvas.Canvas.layers[moduleName];
+        this.active = this.layer.active;
     }
 
     toggleGMLayer() {
