@@ -1,9 +1,15 @@
 const MODULE_ID = "phyvision";
 
+class PhyVisionModule {
+  constructor() {
+    this.phyVisionLayer = new PhyVisionLayer();
+  }
+}
+
 // ==========================================
 // СЛОЙ ХОЛСТА (CANVAS LAYER) ДЛЯ GM
 // ==========================================
-class PhyVisionLayer extends InteractionLayer {
+class PhyVisionLayer extends foundry.canvas.layers.InteractionLayer {
     constructor() {
         super();
         this.frame = { x: 0, y: 0, w: 1920, h: 1080 };
@@ -100,33 +106,36 @@ class PhyVisionLayer extends InteractionLayer {
 // РЕГИСТРАЦИЯ В FOUNDRY v13
 // ==========================================
 
-Hooks.once("init", () => {
+const phyVision = new PhyVisionModule();
+
+foundry.helpers.Hooks.once("init", () => {
     CONFIG.Canvas.layers.phyvision = { 
         group: "interface", 
-        layerClass: PhyVisionLayer 
+        layerClass: PhyVisionLayer,
     };
 });
 
-Hooks.on("getSceneControlButtons", (controls) => {
+foundry.helpers.Hooks.on("getSceneControlButtons", (controls) => {
     if (!game.user.isGM) return;
     
     controls[MODULE_ID] = {
         name: MODULE_ID,
         title: "PhyVision",
-        icon: "fas fa-tv",
+        icon: "fas fa-eye",
         layer: "phyvision",
+        activeTool: "toggle",
         tools: {
-            toggle: {
+            vision: {
                 name: "toggle", 
                 title: "Настройка экрана", 
                 icon: "fas fa-crop-alt",
                 toggle: true, 
-                active: false,
                 onClick: (toggled) => {
                     if (canvas.layers.phyvision) {
-                        toggled ? canvas.layers.phyvision.activate() : canvas.layers.phyvision.deactivate();
+                        toggled ? phyVision.phyVisionLayer.activate() : phyVision.phyVisionLayer.deactivate();
                     }
-                }
+                },
+                on
             }
         }
     };
