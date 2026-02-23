@@ -228,13 +228,20 @@ Hooks.once("init", () => {
 
 Hooks.on("getSceneControlButtons", (controls) => {
     if (!game.user.isGM) return;
-    controls.push({
+    controls.phyvision = {
         name: MODULE_ID,
         title: game.i18n.localize("PHYVISION.Controls.GroupTitle"),
         icon: "fas fa-tv",
+        activeTool: "dummy",
         layer: "phyvision",
-        tools: [
-            {
+        tools: {
+            dummy: {
+                //Dummy tool because Foundry does not like it when there's no valid 'active' tool available, it's hidden on the 'renderSceneControls' hook. https://github.com/foundryvtt/foundryvtt/issues/12966
+                name: "dummy",
+                visible: true,
+                order: 9
+            },
+            toggle: {
                 name: "toggle", 
                 title: game.i18n.localize("PHYVISION.Controls.ToggleFrame"), 
                 icon: "fas fa-crop-alt",
@@ -242,7 +249,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
                 active: false,
                 onClick: (toggled) => toggled ? canvas.layers.phyvision.activate() : canvas.layers.phyvision.deactivate()
             },
-            {
+            resetSize: {
                 name: "resetSize",
                 title: game.i18n.localize("PHYVISION.Controls.ResetFrame"),
                 icon: "fas fa-compress",
@@ -256,8 +263,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
                     }
                 }
             }
-        ]
-    });
+        }
+    };
 });
 
 Hooks.once("ready", () => {
@@ -296,4 +303,9 @@ Hooks.on("initializeVisionSources", (sources) => {
 
         sources.set(sourceId, source);
     });
+});
+
+Hooks.on("renderSceneControls", (sources) => {
+    toolElements.querySelector('button[data-tool="dummy"]').parentElement.style.display = 'none';
+    return;
 });
