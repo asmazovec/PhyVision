@@ -4,10 +4,10 @@
   "description": "Syncronize figurine visions with FoundryVTT.",
   "version": "dev",
   "compatibility": {
-    "minimum": "12",
+    "minimum": "13",
     "verified": "13.351"
   },
-  "scripts": [
+  "esmodules": [
     "scripts/main.js"
   ],
   "languages": [
