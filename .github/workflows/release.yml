@@ -1,0 +1,53 @@
+name: Release Module
+
+# Экшен запускается только при пуше тегов, начинающихся с "v" (например, v1.0.0)
+on:
+  push:
+    tags:
+      - 'v*'
+
+# Выдаем права на создание релизов
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: get_version
+        # Отрезаем букву 'v' из тега (v1.2.0 -> 1.2.0)
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+
+      - name: Update module.json
+        # Автоматически обновляем версию, ссылку на манифест и ссылку на скачивание ZIP
+        run: |
+          jq --arg version "${{ env.VERSION }}" \
+             --arg manifest "https://github.com/${{ github.repository }}/releases/latest/download/module.json" \
+             --arg download "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/phyvision.zip" \
+             '.version = $version | .manifest = $manifest | .download = $download' module.json > module.json.tmp
+          mv module.json.tmp module.json
+          
+          echo "Updated module.json:"
+          cat module.json
+
+      - name: Create ZIP archive
+        # Пакуем только нужные файлы (без .git, .github и прочего мусора)
+        run: zip -r phyvision.zip module.json scripts/ lang/
+
+      - name: Create GitHub Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          # Прикрепляем к релизу обновленный module.json и сам архив
+          files: |
+            module.json
+            phyvision.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
